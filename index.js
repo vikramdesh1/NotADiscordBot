@@ -19,8 +19,9 @@ client.once('ready', () => {
     rule.minute = 0;
     rule.second = 0;
     var j = schedule.scheduleJob(rule, function () {
-        purgeInactiveGeneralMembers();
+        purgeInactiveMembers();
     });
+    purgeInactiveMembers();
 });
 
 client.on('message', message => {
@@ -32,35 +33,40 @@ client.on('message', message => {
     }
 });
 
-async function purgeInactiveGeneralMembers() {
+async function purgeInactiveMembers() {
     const allMessages = [];
-    let lastMessageId;
-    let messages;
     const scores = [];
     let today = new Date();
     let oneMonthAgo;
-    let messageDate;
-    let breakFlag = false;
+    let channels = client.guilds.get(dccrew.id).channels.array();
     if (today.getMonth() == 0) {
         oneMonthAgo = new Date(today.getYear() - 1, 11, today.getDate(), today.getHours(), today.getMinutes(), today.getSeconds());
     } else {
         oneMonthAgo = new Date(today.getYear(), today.getMonth() - 1, today.getDate(), today.getHours(), today.getMinutes(), today.getSeconds());
     }
-    do {
-        messages = await getNMessagesFromChannel(100, dccrew.general, lastMessageId);
-        for (let i = 0; i < messages.length; i++) {
-            messageDate = new Date(messages[i].createdAt.getYear(), messages[i].createdAt.getMonth(), messages[i].createdAt.getDate(), messages[i].createdAt.getHours(), messages[i].createdAt.getMinutes(), messages[i].createdAt.getSeconds());
-            if (messageDate < oneMonthAgo) {
-                breakFlag = true;
-                break;
-            }
-            allMessages.push(messages[i]);
+    for (let i = 0; i < channels.length; i++) {
+        if (channels[i].type == 'text') {
+            let lastMessageId;
+            let messages;
+            let breakFlag = false;
+            let messageDate;
+            do {
+                messages = await getNMessagesFromChannel(100, channels[i].id, lastMessageId);
+                for (let i = 0; i < messages.length; i++) {
+                    messageDate = new Date(messages[i].createdAt.getYear(), messages[i].createdAt.getMonth(), messages[i].createdAt.getDate(), messages[i].createdAt.getHours(), messages[i].createdAt.getMinutes(), messages[i].createdAt.getSeconds());
+                    if (messageDate < oneMonthAgo) {
+                        breakFlag = true;
+                        break;
+                    }
+                    allMessages.push(messages[i]);
+                }
+                lastMessageId = allMessages[allMessages.length - 1].id;
+                if (breakFlag == true) {
+                    break;
+                }
+            } while (messages.length > 0);
         }
-        lastMessageId = allMessages[allMessages.length - 1].id;
-        if (breakFlag == true) {
-            break;
-        }
-    } while (messages.length > 0);
+    }
     let members = client.guilds.get(dccrew.id).members.array();
     members.forEach(member => {
         if (!member.user.bot) {

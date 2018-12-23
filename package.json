@@ -1,0 +1,15 @@
+{
+  "name": "notadiscordbot",
+  "version": "1.0.0",
+  "description": "Not a bot for Discord",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "BugInTheCode",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^11.4.2",
+    "node-schedule": "^1.3.1"
+  }
+}

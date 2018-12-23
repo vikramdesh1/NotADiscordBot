@@ -110,11 +110,12 @@ async function purgeInactiveMembers() {
     embed.addField('Kicked', kickedMessage.slice(0, -2));
     embed.addField(':skull_crossbones:', 'Until next time!');
     client.guilds.get(dccrew.id).channels.get(dccrew.testinggrounds).send(embed);
+    //The Kick
     scores.forEach(s => {
         if (s.score == 0) {
-            /* client.guilds.get(dccrew.id).members.get(s.id).kick('Inactive on general for 1 month').then(() => {
+            client.guilds.get(dccrew.id).members.get(s.id).kick('Inactive on general for 1 month').then(() => {
                 console.log('Kicked ' + s.name + ' for inactivity')
-            }).catch(error => console.error(error)); */
+            }).catch(error => console.error(error));
         }
     });
     console.log(scores);

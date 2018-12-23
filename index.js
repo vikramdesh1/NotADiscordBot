@@ -21,7 +21,6 @@ client.once('ready', () => {
     var j = schedule.scheduleJob(rule, function () {
         purgeInactiveMembers();
     });
-    purgeInactiveMembers();
 });
 
 client.on('message', message => {

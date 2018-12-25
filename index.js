@@ -109,7 +109,7 @@ async function purgeInactiveMembers() {
     embed.addField('Survivors', survivorsMessage.slice(0, -2));
     embed.addField('Kicked', kickedMessage.slice(0, -2));
     embed.addField(':skull_crossbones:', 'Until next time!');
-    client.guilds.get(dccrew.id).channels.get(dccrew.testinggrounds).send(embed);
+    client.guilds.get(dccrew.id).channels.get(dccrew.general).send(embed);
     //The Kick
     scores.forEach(s => {
         if (s.score == 0) {

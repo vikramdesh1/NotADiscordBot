@@ -89,6 +89,7 @@ async function purgeInactiveMembers() {
             return 1;
         return 0;
     });
+    client.guilds.get(dccrew.id).channels.get(dccrew.general).send('Purge commencing, stand by...);
     const embed = new Discord.RichEmbed();
     embed.setTitle('The Purge');
     embed.setDescription('DC Crew\'s monthly purge - ' + new Date().toDateString());

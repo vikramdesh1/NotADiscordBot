@@ -8,6 +8,7 @@
   },
   "author": "BugInTheCode",
   "license": "ISC",
+  "repository": "https://github.com/vikramdesh1/NotADiscordBot",
   "dependencies": {
     "discord.js": "^11.4.2",
     "node-schedule": "^1.3.1"

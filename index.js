@@ -113,7 +113,7 @@ async function purgeInactiveMembers() {
     //The Kick
     scores.forEach(s => {
         if (s.score == 0) {
-            client.guilds.get(dccrew.id).members.get(s.id).kick('Inactive on general for 1 month').then(() => {
+            client.guilds.get(dccrew.id).members.get(s.id).kick('Inactive for 1 month').then(() => {
                 console.log('Kicked ' + s.name + ' for inactivity')
             }).catch(error => console.error(error));
         }

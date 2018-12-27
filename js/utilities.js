@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 const { dccrew, meetupkey } = require('../config.json');
 const request = require('request-promise-native');
 
-const meetupRegex = /https:\/\/www\.meetup\.com\/(\w+)\/events\/(\w+)\/?/;
+const meetupRegex = /https:\/\/www\.meetup\.com\/([\w-]+)\/events\/(\w+)\/?/;
 
 function getNMessagesFromChannel(client, numberOfMessages, channel, lastMessageId) {
     const options = {
@@ -29,13 +29,17 @@ function parseMeetup(message) {
         let meetup = JSON.parse(resp);
         let embed = new Discord.RichEmbed();
         embed.setTitle(meetup.name);
-        embed.setDescription(meetup.description.replace(/(<\/?\w+\/?>)+/g, ''));
+        if (meetup.description != undefined) {
+            embed.setDescription(meetup.description.replace(/(<\/?\w+\/?>)+/g, ''));
+        }
         embed.setURL(meetup.link);
         embed.setColor('0x00FF00');
         let date = meetup.local_date.split('-');
         embed.addField('Date', new Date(date[0], date[1] - 1, date[2]).toDateString());
         embed.addField('Time', meetup.local_time);
-        embed.addField('Location', meetup.venue.name + ' @ ' + meetup.venue.address_1 + ', ' + meetup.venue.city + ', ' + meetup.venue.state);
+        if (meetup.venue != undefined) {
+            embed.addField('Location', meetup.venue.name + ' @ ' + meetup.venue.address_1 + ', ' + meetup.venue.city + ', ' + meetup.venue.state);
+        }
         message.channel.send(embed);
     });
 }

@@ -7,7 +7,7 @@ const schedule = require('node-schedule');
 const commands = require('./js/commands.js');
 const utilities = require('./js/utilities.js');
 
-const meetupRegex = /https:\/\/www\.meetup\.com\/(\w+)\/events\/(\w+)\/?/;
+const meetupRegex = /https:\/\/www\.meetup\.com\/([\w-]+)\/events\/(\w+)\/?/;
 
 //Discord.js event handlers
 client.once('ready', () => {

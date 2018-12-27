@@ -78,7 +78,11 @@ async function purgeInactiveMembers(client) {
     })
     embed.addField('Scores', scoresMessage);
     embed.addField('Survivors', survivorsMessage.slice(0, -2));
-    embed.addField('Kicked', kickedMessage.slice(0, -2));
+    if(kickedMessage != '') {
+        embed.addField('Kicked', kickedMessage.slice(0, -2));
+    } else {
+        embed.addField('Kicked', 'Everybody survived!');
+    }
     embed.addField(':skull_crossbones:', 'Until next time!');
     client.guilds.get(dccrew.id).channels.get(dccrew.general).send(embed);
     //The Kick

@@ -5,10 +5,13 @@ const {
 const client = new Discord.Client();
 const schedule = require('node-schedule');
 const commands = require('./js/commands.js');
+const utilities = require('./js/utilities.js');
+
+const meetupRegex = /https:\/\/www\.meetup\.com\/(\w+)\/events\/(\w+)\/?/;
 
 //Discord.js event handlers
 client.once('ready', () => {
-    console.log('Ready!');
+    console.log('Bob ready for action!');
     client.user.setActivity('Overwatch');
 
     //Scheduling purge event
@@ -23,11 +26,13 @@ client.once('ready', () => {
 });
 
 client.on('message', message => {
-    if (!message.content.startsWith(prefix) || message.author.bot) return;
+    if (message.author.bot) return;
     const args = message.content.slice(prefix.length).split(/ +/);
     const command = args.shift().toLowerCase();
     if (command == 'ping') {
         message.reply('pong');
+    } else if (meetupRegex.test(message.content)) {
+        utilities.parseMeetup(message);
     }
 });
 

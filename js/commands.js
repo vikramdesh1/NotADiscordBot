@@ -62,34 +62,36 @@ async function purgeInactiveMembers(client) {
     client.guilds.get(dccrew.id).channels.get(dccrew.general).send('Purge commencing, stand by...');
     const embed = new Discord.RichEmbed();
     embed.setTitle('The Purge');
-    embed.setDescription('DC Crew\'s monthly purge - ' + new Date().toDateString());
+    embed.setDescription(`DC Crew\'s monthly purge - ${new Date().toDateString()}`);
     embed.setColor('0xFF0000');
     let scoresMessage = '';
     let survivorsMessage = '';
     let kickedMessage = '';
     scoresMessage += 'The following are message counts for the last month :calendar_spiral: \n';
     scores.forEach(score => {
-        scoresMessage += score.name + ' : ' + score.score + '\n';
+        scoresMessage += `${score.name} : ${score.score}\n`;
         if (score.score == 0) {
-            kickedMessage += score.name + ', ';
+            kickedMessage += `${score.name}, `;
         } else {
-            survivorsMessage += score.name + ', ';
+            survivorsMessage += `${score.name}, `;
         }
     })
     embed.addField('Scores', scoresMessage);
     embed.addField('Survivors', survivorsMessage.slice(0, -2));
-    if(kickedMessage != '') {
+    if (kickedMessage != '') {
         embed.addField('Kicked', kickedMessage.slice(0, -2));
     } else {
         embed.addField('Kicked', 'Everybody survived!');
     }
     embed.addField(':skull_crossbones:', 'Until next time!');
-    client.guilds.get(dccrew.id).channels.get(dccrew.general).send(embed);
+    client.guilds.get(dccrew.id).channels.get(dccrew.general).send(embed).then(message => {
+        client.guilds.get(dccrew.id).channels.get(dccrew.general).send('Happy New Year!');
+    });
     //The Kick
     scores.forEach(s => {
         if (s.score == 0) {
             client.guilds.get(dccrew.id).members.get(s.id).kick('Inactive for 1 month').then(() => {
-                console.log('Kicked ' + s.name + ' for inactivity')
+                console.log(`Kicked ${s.name} for inactivity`);
             }).catch(error => console.error(error));
         }
     });

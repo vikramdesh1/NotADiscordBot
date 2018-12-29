@@ -30,7 +30,7 @@ function parseMeetup(message) {
         let embed = new Discord.RichEmbed();
         embed.setTitle(meetup.name);
         if (meetup.description != undefined) {
-            embed.setDescription(meetup.description.replace(/(<\/?\w+\/?>)+/g, ''));
+            embed.setDescription(meetup.description.replace(/(<\/?\w+\/?>)+/g, '').substring(0, 2040) + '...');
         }
         embed.setURL(meetup.link);
         embed.setColor('0x00FF00');
@@ -38,7 +38,7 @@ function parseMeetup(message) {
         embed.addField('Date', new Date(date[0], date[1] - 1, date[2]).toDateString());
         embed.addField('Time', meetup.local_time);
         if (meetup.venue != undefined) {
-            embed.addField('Location', meetup.venue.name + ' @ ' + meetup.venue.address_1 + ', ' + meetup.venue.city + ', ' + meetup.venue.state);
+            embed.addField('Location', `${meetup.venue.name} @ ${meetup.venue.address_1}, ${meetup.venue.city}, ${meetup.venue.state}`);
         }
         message.channel.send(embed);
     });

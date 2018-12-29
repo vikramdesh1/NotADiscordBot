@@ -17,7 +17,7 @@ client.once('ready', () => {
     //Scheduling purge event
     var rule = new schedule.RecurrenceRule();
     rule.date = 1;
-    rule.hour = 12;
+    rule.hour = 0;
     rule.minute = 0;
     rule.second = 0;
     var j = schedule.scheduleJob(rule, function () {

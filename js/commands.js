@@ -14,7 +14,7 @@ async function purgeInactiveMembers(client) {
         oneMonthAgo = new Date(today.getYear(), today.getMonth() - 1, today.getDate(), today.getHours(), today.getMinutes(), today.getSeconds());
     }
     for (let i = 0; i < channels.length; i++) {
-        if (channels[i].type == 'text') {
+        if (channels[i].type == 'text' && channels[i].id != dccrew.testinggrounds) {
             let lastMessageId;
             let messages;
             let breakFlag = false;

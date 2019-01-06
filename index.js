@@ -1,11 +1,13 @@
 const Discord = require('discord.js');
 const {
     prefix,
-    token } = require('./config.json');
+    token, sentrydsn } = require('./config.json');
 const client = new Discord.Client();
 const schedule = require('node-schedule');
 const commands = require('./js/commands.js');
 const utilities = require('./js/utilities.js');
+const Sentry = require('@sentry/node');
+Sentry.init({ dsn: sentrydsn });
 
 const meetupRegex = /https:\/\/www\.meetup\.com\/([\w-]+)\/events\/(\w+)\/?/;
 

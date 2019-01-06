@@ -84,9 +84,7 @@ async function purgeInactiveMembers(client) {
         embed.addField('Kicked', 'Everybody survived!');
     }
     embed.addField(':skull_crossbones:', 'Until next time!');
-    client.guilds.get(dccrew.id).channels.get(dccrew.general).send(embed).then(message => {
-        client.guilds.get(dccrew.id).channels.get(dccrew.general).send('Happy New Year!');
-    });
+    client.guilds.get(dccrew.id).channels.get(dccrew.general).send(embed);
     //The Kick
     scores.forEach(s => {
         if (s.score == 0) {
